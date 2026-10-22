@@ -1,0 +1,39 @@
+---
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/source-sans-3';
+import '../styles/global.css';
+import SEOHead from '../components/SEOHead.astro';
+import type { Lang, RouteKey } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  routeKey?: RouteKey;
+  path?: string;
+  noindex?: boolean;
+  jsonLd?: object | object[];
+}
+
+const props = Astro.props;
+const t = useTranslations(props.lang);
+---
+
+<!doctype html>
+<html lang={props.lang === 'de' ? 'de-AT' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#faf7f2" />
+    <SEOHead {...props} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t('nav.skip')}</a>
+    <slot name="header" />
+    <main id="main">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

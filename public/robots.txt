@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# PLACEHOLDER_DOMAIN
+Sitemap: https://placeholder-domain.example/sitemap-index.xml

@@ -1,0 +1,84 @@
+/*
+ * Design-Tokens. Vor jeder Gestaltung festgelegt.
+ * Zwei Akzentfarben (A/B) und zwei Schriftpaare (1/2) stehen zur Wahl.
+ * Nach der Entscheidung bleibt nur die gewählte Variante in :root, der Rest wird gelöscht.
+ * Kontraste (WCAG 2.x) gegen --color-bg #FAF7F2:
+ *   --color-text  #1C1B19  16.1 : 1
+ *   --color-muted #5A5650   6.8 : 1
+ *   Akzent A #0E4F5C        8.6 : 1 auf bg, Weiß auf Akzent 9.2 : 1  (AA und AAA)
+ *   Akzent B #006B6E        5.9 : 1 auf bg, Weiß auf Akzent 6.3 : 1  (AA)
+ */
+
+:root {
+  /* Farben */
+  --color-bg: #faf7f2;          /* warmes Weiß */
+  --color-surface: #f2eee6;     /* leicht abgesetzte Fläche */
+  --color-text: #1c1b19;        /* fast Schwarz */
+  --color-muted: #5a5650;
+  --color-line: #ddd6ca;
+  --color-error: #a3261b;       /* 6.6 : 1 auf bg */
+
+  --accent-a: #0e4f5c;          /* „Tiefe“: dunkles Seeblau-Türkis */
+  --accent-a-soft: #e3ecec;
+  --accent-b: #006b6e;          /* „Ufer“: helleres, grünlicheres Türkis */
+  --accent-b-soft: #e0eeec;
+
+  --color-accent: var(--accent-a);
+  --color-accent-soft: var(--accent-a-soft);
+  --color-on-accent: #ffffff;
+
+  /* Schriften: Paar 1 = Fraunces + Source Sans 3, Paar 2 = Newsreader + Public Sans */
+  --font-serif-1: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-sans-1: 'Source Sans 3 Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif-2: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  --font-sans-2: 'Public Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --font-display: var(--font-serif-1);
+  --font-body: var(--font-sans-1);
+
+  /* Schriftgrößen (fluid) */
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.3125rem);
+  --text-h3: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --text-h2: clamp(1.75rem, 1.45rem + 1.5vw, 2.625rem);
+  --text-h1: clamp(2.25rem, 1.7rem + 2.8vw, 4rem);
+  --leading-tight: 1.12;
+  --leading-body: 1.6;
+
+  /* Radien: drei Werte */
+  --radius-s: 4px;    /* Eingabefelder, Buttons */
+  --radius-m: 10px;   /* Karten */
+  --radius-l: 22px;   /* große Flächen, Foto */
+
+  /* Abstandsskala (4er-Basis) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* Sektionsrhythmus: bewusst unterschiedlich */
+  --section-tight: clamp(var(--space-7), 6vw, var(--space-8));
+  --section-normal: clamp(var(--space-8), 9vw, var(--space-9));
+  --section-wide: clamp(var(--space-9), 12vw, var(--space-10));
+
+  --measure: 62ch;
+  --container: 72rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+}
+
+/* Nur für die Vorschau der Varianten (tokens-preview). */
+[data-accent='b'] {
+  --color-accent: var(--accent-b);
+  --color-accent-soft: var(--accent-b-soft);
+}
+[data-fonts='2'] {
+  --font-display: var(--font-serif-2);
+  --font-body: var(--font-sans-2);
+}

@@ -1,0 +1,48 @@
+---
+import { SITE_URL } from '../config/site';
+import type { Lang, RouteKey } from '../i18n/ui';
+import { absoluteUrl, alternatesFor, localizedPath, useTranslations } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  /** Schlüssel aus der Routenkarte. Ohne routeKey (z. B. /h/…) werden keine hreflang-Links gesetzt. */
+  routeKey?: RouteKey;
+  /** Kanonischer Pfad, falls die Seite nicht in der Routenkarte steht. */
+  path?: string;
+  noindex?: boolean;
+  ogImage?: string;
+  jsonLd?: object | object[];
+}
+
+const { title, description, lang, routeKey, path, noindex = false, ogImage = '/og-default.png', jsonLd } = Astro.props;
+const t = useTranslations(lang);
+const canonical = routeKey ? absoluteUrl(localizedPath(routeKey, lang)) : absoluteUrl(path ?? Astro.url.pathname);
+const alternates = routeKey && !noindex ? alternatesFor(routeKey) : [];
+const ogLocale = lang === 'de' ? 'de_AT' : 'en_GB';
+const ogLocaleAlt = lang === 'de' ? 'en_GB' : 'de_AT';
+const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+{alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={t('site.name')} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={new URL(ogImage, SITE_URL).href} />
+<meta property="og:locale" content={ogLocale} />
+{alternates.length > 0 && <meta property="og:locale:alternate" content={ogLocaleAlt} />}
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+{schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
