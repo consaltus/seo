@@ -50,6 +50,17 @@ Eine Datei in `src/content/hotels/` ergibt eine Seite mit dem persönlichen Befu
 - Das Formular ist vorbefüllt (Feld Hotel) und meldet im versteckten Feld `quelle` den Slug.
 - `hotel-beispiel.md` ist ein DEMO-Eintrag mit erfundenem Hotel. Vor dem Livegang löschen.
 
+## Qualitätsprüfung
+
+Nach `npm run build`: `python3 scripts/check-dist.py` prüft JSON-LD, hreflang-Paare und externe Ressourcen im Build.
+
+Stand Etappe 5 (Lighthouse 13.5, mobil, lokal über `astro preview`):
+
+| Seite | Performance | Accessibility | Best Practices | SEO |
+| --- | --- | --- | --- | --- |
+| `/`, `/en/`, `/impressum/`, `/en/privacy/` | 100 | 100 | 100 | 100 |
+| `/danke/`, `/h/…`, `/404.html` | 100 | 100 | 100 | 66 (nur `is-crawlable`, gewollt wegen `noindex`) |
+
 ## Rechtliches: Prüfliste für das Impressum
 
 Die Texte auf der Site sind Entwürfe. Sie sind nicht juristisch geprüft. Vor dem Livegang von einer fachkundigen Stelle (z. B. WKO-Gründerservice) prüfen lassen.

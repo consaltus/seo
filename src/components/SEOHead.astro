@@ -7,7 +7,7 @@ interface Props {
   title: string;
   description: string;
   lang: Lang;
-  /** Schlüssel aus der Routenkarte. Ohne routeKey (z. B. /h/…) werden keine hreflang-Links gesetzt. */
+  /** Schlüssel aus der Routenkarte. Ohne routeKey (z. B. /h/…, 404) gibt es kein Sprachpaar und keine hreflang-Links. */
   routeKey?: RouteKey;
   /** Kanonischer Pfad, falls die Seite nicht in der Routenkarte steht. */
   path?: string;
@@ -19,7 +19,7 @@ interface Props {
 const { title, description, lang, routeKey, path, noindex = false, ogImage = '/og-default.png', jsonLd } = Astro.props;
 const t = useTranslations(lang);
 const canonical = routeKey ? absoluteUrl(localizedPath(routeKey, lang)) : absoluteUrl(path ?? Astro.url.pathname);
-const alternates = routeKey && !noindex ? alternatesFor(routeKey) : [];
+const alternates = routeKey ? alternatesFor(routeKey) : [];
 const ogLocale = lang === 'de' ? 'de_AT' : 'en_GB';
 const ogLocaleAlt = lang === 'de' ? 'en_GB' : 'de_AT';
 const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
