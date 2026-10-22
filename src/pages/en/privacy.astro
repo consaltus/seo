@@ -1,0 +1,68 @@
+---
+import Legal from '../../layouts/Legal.astro';
+import { analytics, owner } from '../../config/site';
+---
+
+<Legal
+  title="Privacy policy"
+  description="How this website processes personal data: hosting, contact form, no cookies."
+  lang="en"
+  routeKey="datenschutz"
+  note="Draft. Not legally reviewed. The German version is authoritative. PLACEHOLDER_REVIEW"
+>
+  <h2>Controller</h2>
+  <p>{owner.name}, {owner.street}, {owner.postalCode} {owner.city}, Austria. Email: {owner.email}</p>
+
+  <h2>In short</h2>
+  <ul>
+    <li>This website sets no cookies.</li>
+    <li>It loads nothing from third-party servers. Fonts are served from our own server.</li>
+    <li>We only use contact form data to answer your request.</li>
+  </ul>
+
+  <h2>Hosting</h2>
+  <p>
+    The website is hosted by Netlify, Inc. (PLACEHOLDER_NETLIFY_ADDRESS, USA). When you visit, Netlify processes technically necessary
+    data: IP address, date and time, page requested, browser and operating system. This is needed to deliver the site and protect it
+    from attacks.
+  </p>
+  <p>Legal basis: legitimate interest in operating the website securely (Art. 6(1)(f) GDPR).</p>
+  <p>
+    A data processing agreement is in place with Netlify. Transfers to the USA rely on PLACEHOLDER_REVIEW (EU-US Data Privacy Framework
+    or standard contractual clauses, depending on Netlify’s current status). Log retention: PLACEHOLDER_LOG_RETENTION.
+  </p>
+
+  <h2>Contact form</h2>
+  <p>
+    When you submit the form, we process your name, email address, hotel, hotel website and, if provided, phone number and message.
+    The form is transmitted via Netlify Forms and stored there. We receive an email notification.
+  </p>
+  <p>Purpose: answering your request and arranging a call.</p>
+  <p>Legal basis: steps taken at your request prior to entering into a contract (Art. 6(1)(b) GDPR).</p>
+  <p>Retention: PLACEHOLDER_REQUEST_RETENTION. After that we delete the request at Netlify and in our mailbox.</p>
+  <p>A hidden field protects the form from spam. There is no CAPTCHA and no third-party service for this.</p>
+
+  <h2>Statistics</h2>
+  {
+    analytics.enabled ? (
+      <p>PLACEHOLDER_ANALYTICS_DESCRIPTION (cookieless only)</p>
+    ) : (
+      <p>We do not collect visitor statistics. There is no tracking and no analytics tool. PLACEHOLDER_ANALYTICS_DECISION</p>
+    )
+  }
+
+  <h2>Cookies</h2>
+  <p>This website sets no cookies and does not use local browser storage.</p>
+
+  <h2>Your rights</h2>
+  <p>
+    You have the right of access, rectification, erasure, restriction of processing, data portability and objection. Write to
+    {' '}{owner.email}.
+  </p>
+  <p>
+    You can complain to the supervisory authority. In Austria this is the Datenschutzbehörde, Barichgasse 40–42, 1030 Vienna,
+    <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.
+  </p>
+
+  <p>Last updated: PLACEHOLDER_DATE</p>
+</Legal>

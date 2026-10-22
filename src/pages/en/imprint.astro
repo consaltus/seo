@@ -1,0 +1,40 @@
+---
+import Legal from '../../layouts/Legal.astro';
+import { owner } from '../../config/site';
+import { useTranslations } from '../../i18n/utils';
+const t = useTranslations('en');
+---
+
+<Legal
+  title="Imprint"
+  description="Legal notice under § 5 ECG and disclosure under § 25 MedienG (Austria)."
+  lang="en"
+  routeKey="impressum"
+  note="Draft. Not legally reviewed. The German version is authoritative. PLACEHOLDER_REVIEW"
+>
+  <h2>Information under § 5 Austrian E-Commerce Act (ECG)</h2>
+  <dl>
+    <dt>Name</dt><dd>{owner.name}</dd>
+    <dt>Trading name</dt><dd>{owner.businessName} ({t('site.name')})</dd>
+    <dt>Address</dt><dd>{owner.street}, {owner.postalCode} {owner.city}, Austria</dd>
+    <dt>Email</dt><dd>{owner.email}</dd>
+    <dt>Phone</dt><dd>{owner.phone}</dd>
+    <dt>Legal form</dt><dd>Sole proprietorship (Einzelunternehmen)</dd>
+    <dt>Registered trade</dt><dd>{owner.gewerbe}</dd>
+    <dt>Supervisory authority</dt><dd>{owner.gewerbebehoerde}</dd>
+    <dt>Chamber</dt><dd>{owner.kammer}</dd>
+    {owner.uid && (<><dt>VAT ID</dt><dd>{owner.uid}</dd></>)}
+    <dt>Professional law</dt>
+    <dd>Austrian Trade Regulation Act (Gewerbeordnung), available at <a href="https://www.ris.bka.gv.at">www.ris.bka.gv.at</a></dd>
+  </dl>
+
+  <h2>Disclosure under § 25 Austrian Media Act (MedienG)</h2>
+  <dl>
+    <dt>Media owner</dt><dd>{owner.name}, {owner.city}</dd>
+    <dt>Business purpose</dt><dd>PLACEHOLDER_BUSINESS_PURPOSE</dd>
+    <dt>Editorial line</dt><dd>Information about the company’s services.</dd>
+  </dl>
+
+  <h2>Liability for links</h2>
+  <p>The operators of linked external websites are responsible for their content.</p>
+</Legal>

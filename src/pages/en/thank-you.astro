@@ -1,0 +1,10 @@
+---
+import Legal from '../../layouts/Legal.astro';
+import { localizedPath } from '../../i18n/utils';
+---
+
+<Legal title="Thank you for your request" description="Your request has reached us." lang="en" routeKey="danke" noindex>
+  <p>Your message has arrived. We will reply within PLACEHOLDER_RESPONSE_TIME with suggested times.</p>
+  <p>We do not send an automatic copy of your details. If something is missing, just write to us again.</p>
+  <p><a href={localizedPath('home', 'en')}>Back to the home page</a></p>
+</Legal>

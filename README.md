@@ -83,4 +83,20 @@ Vor dem Livegang ersetzen. `grep -rn PLACEHOLDER src public astro.config.mjs` ze
 | `PLACEHOLDER_UID` | `src/config/site.ts` | UID-Nummer, leer lassen falls keine |
 | `PLACEHOLDER_PREIS` / `PLACEHOLDER_PRICE` | `src/config/site.ts` | Preistexte (nur sichtbar mit `showPrices: true`) |
 | `PLACEHOLDER_OG_BILD` | `public/og-default.png` | Endgültiges Open-Graph-Bild 1200×630 |
+| `PLACEHOLDER_ERSTGESPRAECH` / `PLACEHOLDER_FIRST_CALL` | `src/i18n/content/home.ts` (Hero) | Konditionen des Erstgesprächs: kostenlos oder nicht, Dauer |
+| `PLACEHOLDER_BEFUND_1..3`, `PLACEHOLDER_FOLGE_1..3`, `PLACEHOLDER_BEHEBUNG_1..3` (EN: `FINDING`, `CONSEQUENCE`, `FIX`) | `src/i18n/content/home.ts` | Drei echte, anonymisierte Beispiele aus Prüfungen |
+| `PLACEHOLDER_DAUER_CHECK` / `PLACEHOLDER_DURATION_CHECK` | `src/i18n/content/home.ts` | Dauer des Sichtbarkeitschecks |
+| `PLACEHOLDER_LAUFZEIT` / `PLACEHOLDER_TERM` | `src/i18n/content/home.ts` | Mindestlaufzeit / Kündigungsfrist der Betreuung |
+| `PLACEHOLDER_ROLLE` / `PLACEHOLDER_ROLE` | `src/i18n/content/home.ts` | Berufsbezeichnung unter dem Namen |
+| `PLACEHOLDER_BIOGRAFIE_ABSATZ_1..2` / `PLACEHOLDER_BIOGRAPHY_PARAGRAPH_1..2` | `src/i18n/content/home.ts` | Biografie |
+| `PLACEHOLDER_FOTO`, `PLACEHOLDER_FOTO_ALT` (EN: `PHOTO`) | `src/components/home/About.astro`, `home.ts` | Eigenes Foto (kein Stockbild) und Alt-Text |
+| `PLACEHOLDER_ZEITAUFWAND` / `PLACEHOLDER_TIME_EFFORT` | FAQ in `home.ts` | Konkreter Zeitaufwand für das Hotel |
+| `PLACEHOLDER_REVIEW` | FAQ-Antworten, Impressum, Datenschutz | Entwurfstext, vom Inhaber bzw. rechtlich zu prüfen |
+| `PLACEHOLDER_ANTWORTZEIT` / `PLACEHOLDER_RESPONSE_TIME` | Kontakt (`home.ts`), Danke-Seiten | Zugesagte Antwortzeit |
+| `PLACEHOLDER_UNTERNEHMENSGEGENSTAND` / `PLACEHOLDER_BUSINESS_PURPOSE` | Impressum DE/EN | Unternehmensgegenstand für § 25 MedienG |
+| `PLACEHOLDER_NETLIFY_ANSCHRIFT` / `PLACEHOLDER_NETLIFY_ADDRESS` | Datenschutz DE/EN | Aktuelle Anschrift von Netlify, Inc. laut deren DPA |
+| `PLACEHOLDER_LOGDAUER` / `PLACEHOLDER_LOG_RETENTION` | Datenschutz DE/EN | Speicherdauer der Server-Logs bei Netlify |
+| `PLACEHOLDER_SPEICHERDAUER_ANFRAGEN` / `PLACEHOLDER_REQUEST_RETENTION` | Datenschutz DE/EN | Eigene Löschfrist für Anfragen |
+| `PLACEHOLDER_ANALYTICS_ENTSCHEIDUNG` / `PLACEHOLDER_ANALYTICS_DECISION` (bzw. `_BESCHREIBUNG` / `_DESCRIPTION`) | Datenschutz DE/EN | Entscheidung zur Statistik; bei Aktivierung Beschreibung des cookieless Tools |
+| `PLACEHOLDER_DATUM` / `PLACEHOLDER_DATE` | Datenschutz DE/EN | Stand der Datenschutzerklärung |
 | Analytics-Entscheidung | `src/config/site.ts` (`analytics.enabled`) | Standard: keine Statistik |

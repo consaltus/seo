@@ -1,0 +1,71 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { analytics, owner } from '../config/site';
+---
+
+<Legal
+  title="Datenschutzerklärung"
+  description="Wie diese Website personenbezogene Daten verarbeitet: Hosting, Kontaktformular, keine Cookies."
+  lang="de"
+  routeKey="datenschutz"
+  note="Entwurf. Rechtlich nicht geprüft. Vor Veröffentlichung prüfen lassen. PLACEHOLDER_REVIEW"
+>
+  <h2>Verantwortlicher</h2>
+  <p>{owner.name}, {owner.street}, {owner.postalCode} {owner.city}, Österreich. E-Mail: {owner.email}</p>
+
+  <h2>Kurz gesagt</h2>
+  <ul>
+    <li>Diese Website setzt keine Cookies.</li>
+    <li>Sie lädt keine Inhalte von fremden Servern. Schriften liegen auf unserem eigenen Server.</li>
+    <li>Daten aus dem Kontaktformular verwenden wir nur, um Ihre Anfrage zu beantworten.</li>
+  </ul>
+
+  <h2>Hosting</h2>
+  <p>
+    Die Website liegt bei Netlify, Inc. (PLACEHOLDER_NETLIFY_ANSCHRIFT, USA). Beim Aufruf verarbeitet Netlify technisch nötige Daten:
+    IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browser und Betriebssystem. Das ist nötig, um die Seite auszuliefern und vor
+    Angriffen zu schützen.
+  </p>
+  <p>Rechtsgrundlage: berechtigtes Interesse am sicheren Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO).</p>
+  <p>
+    Mit Netlify besteht ein Auftragsverarbeitungsvertrag. Die Übermittlung in die USA stützt sich auf PLACEHOLDER_REVIEW
+    (EU-US Data Privacy Framework oder Standardvertragsklauseln, je nach aktuellem Stand bei Netlify). Speicherdauer der Logdaten:
+    PLACEHOLDER_LOGDAUER.
+  </p>
+
+  <h2>Kontaktformular</h2>
+  <p>
+    Wenn Sie das Formular absenden, verarbeiten wir Name, E-Mail-Adresse, Hotel, Website des Hotels und, falls angegeben, Telefonnummer
+    und Nachricht. Das Formular wird über Netlify Forms übermittelt und dort gespeichert. Wir erhalten eine Benachrichtigung per E-Mail.
+  </p>
+  <p>Zweck: Beantwortung Ihrer Anfrage und Vereinbarung eines Termins.</p>
+  <p>
+    Rechtsgrundlage: Durchführung vorvertraglicher Maßnahmen auf Ihre Anfrage (Art. 6 Abs. 1 lit. b DSGVO).
+  </p>
+  <p>Speicherdauer: PLACEHOLDER_SPEICHERDAUER_ANFRAGEN. Danach löschen wir die Anfrage bei Netlify und in unserem Postfach.</p>
+  <p>Ein verstecktes Feld schützt das Formular vor Spam. Es gibt kein CAPTCHA und keinen Dienst eines Dritten dafür.</p>
+
+  <h2>Statistik</h2>
+  {
+    analytics.enabled ? (
+      <p>PLACEHOLDER_ANALYTICS_BESCHREIBUNG (nur cookieless)</p>
+    ) : (
+      <p>Wir erheben keine Statistik über Besuche. Es gibt kein Tracking und keine Analyse-Tools. PLACEHOLDER_ANALYTICS_ENTSCHEIDUNG</p>
+    )
+  }
+
+  <h2>Cookies</h2>
+  <p>Diese Website setzt keine Cookies und verwendet keinen lokalen Speicher im Browser.</p>
+
+  <h2>Ihre Rechte</h2>
+  <p>
+    Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch.
+    Schreiben Sie dazu an {owner.email}.
+  </p>
+  <p>
+    Sie können sich bei der Aufsichtsbehörde beschweren. In Österreich ist das die Datenschutzbehörde, Barichgasse 40–42, 1030 Wien,
+    <a href="https://www.dsb.gv.at">www.dsb.gv.at</a>.
+  </p>
+
+  <p>Stand: PLACEHOLDER_DATUM</p>
+</Legal>

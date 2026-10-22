@@ -1,0 +1,79 @@
+---
+// Rahmen für Impressum, Datenschutz und Danke-Seite: einfache Textseite.
+import Base from './Base.astro';
+import type { Lang, RouteKey } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  routeKey: RouteKey;
+  noindex?: boolean;
+  /** Hinweis oben, z. B. dass der Text ein ungeprüfter Entwurf ist. */
+  note?: string;
+}
+const { title, note, ...rest } = Astro.props;
+---
+
+<Base title={title} {...rest}>
+  <article class="container legal">
+    <h1>{title}</h1>
+    {note && <p class="note">{note}</p>}
+    <slot />
+  </article>
+</Base>
+
+<style>
+  .legal {
+    padding-block: var(--section-tight) var(--section-normal);
+    max-width: calc(var(--measure) + 2 * var(--gutter));
+    display: grid;
+    gap: var(--space-4);
+  }
+  .legal h1 {
+    font-size: var(--text-h2);
+    margin-bottom: var(--space-3);
+  }
+  .note {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    border: 1px dashed var(--color-muted);
+    border-radius: var(--radius-s);
+    padding: var(--space-3) var(--space-4);
+  }
+  .legal :global(h2) {
+    font-size: var(--text-h3);
+    margin-top: var(--space-6);
+  }
+  .legal :global(h3) {
+    font-size: var(--text-base);
+    margin-top: var(--space-4);
+  }
+  .legal :global(ul) {
+    margin: 0;
+    padding-left: 1.2em;
+    display: grid;
+    gap: var(--space-1);
+  }
+  .legal :global(dl) {
+    margin: 0;
+    display: grid;
+    grid-template-columns: minmax(8rem, max-content) 1fr;
+    gap: var(--space-2) var(--space-5);
+  }
+  .legal :global(dt) {
+    font-weight: 600;
+  }
+  .legal :global(dd) {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 36rem) {
+    .legal :global(dl) {
+      grid-template-columns: 1fr;
+    }
+    .legal :global(dd) {
+      margin-bottom: var(--space-3);
+    }
+  }
+</style>

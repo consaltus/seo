@@ -1,0 +1,40 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { owner } from '../config/site';
+import { useTranslations } from '../i18n/utils';
+const t = useTranslations('de');
+---
+
+<Legal
+  title="Impressum"
+  description="Impressum und Offenlegung gemäß § 5 ECG und § 25 MedienG."
+  lang="de"
+  routeKey="impressum"
+  note="Entwurf. Rechtlich nicht geprüft. Vor Veröffentlichung prüfen lassen (Prüfliste in der README). PLACEHOLDER_REVIEW"
+>
+  <h2>Informationen gemäß § 5 E-Commerce-Gesetz</h2>
+  <dl>
+    <dt>Name</dt><dd>{owner.name}</dd>
+    <dt>Geschäftsbezeichnung</dt><dd>{owner.businessName} ({t('site.name')})</dd>
+    <dt>Anschrift</dt><dd>{owner.street}, {owner.postalCode} {owner.city}, Österreich</dd>
+    <dt>E-Mail</dt><dd>{owner.email}</dd>
+    <dt>Telefon</dt><dd>{owner.phone}</dd>
+    <dt>Rechtsform</dt><dd>Einzelunternehmen</dd>
+    <dt>Gewerbe</dt><dd>{owner.gewerbe}</dd>
+    <dt>Gewerbebehörde</dt><dd>{owner.gewerbebehoerde}</dd>
+    <dt>Kammer</dt><dd>{owner.kammer}</dd>
+    {owner.uid && (<><dt>UID-Nummer</dt><dd>{owner.uid}</dd></>)}
+    <dt>Berufsrecht</dt>
+    <dd>Gewerbeordnung (GewO), abrufbar unter <a href="https://www.ris.bka.gv.at">www.ris.bka.gv.at</a></dd>
+  </dl>
+
+  <h2>Offenlegung gemäß § 25 Mediengesetz</h2>
+  <dl>
+    <dt>Medieninhaber</dt><dd>{owner.name}, {owner.city}</dd>
+    <dt>Unternehmensgegenstand</dt><dd>PLACEHOLDER_UNTERNEHMENSGEGENSTAND</dd>
+    <dt>Grundlegende Richtung</dt><dd>Information über die Leistungen des Unternehmens.</dd>
+  </dl>
+
+  <h2>Haftung für Links</h2>
+  <p>Für Inhalte verlinkter fremder Websites sind deren Betreiber verantwortlich.</p>
+</Legal>

@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { localizedPath } from '../i18n/utils';
+---
+
+<Base title="Seite nicht gefunden · Page not found" description="Diese Seite gibt es nicht." lang="de" path="/404/" noindex>
+  <div class="container notfound">
+    <h1>Seite nicht gefunden</h1>
+    <p>Diese Adresse gibt es nicht oder nicht mehr.</p>
+    <p><a href={localizedPath('home', 'de')}>Zur Startseite</a></p>
+    <div lang="en" class="en">
+      <h2>Page not found</h2>
+      <p>This address does not exist, or no longer exists.</p>
+      <p><a href={localizedPath('home', 'en')}>Go to the home page</a></p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .notfound {
+    padding-block: var(--section-normal);
+    display: grid;
+    gap: var(--space-4);
+  }
+  .en {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-line);
+  }
+  .en h2 {
+    font-size: var(--text-h3);
+  }
+</style>
