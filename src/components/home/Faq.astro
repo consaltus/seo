@@ -1,0 +1,77 @@
+---
+import type { HomeContent } from '../../i18n/content/home';
+interface Props {
+  content: HomeContent['faq'];
+}
+const { content: c } = Astro.props;
+---
+
+<section class="faq container" id="faq" aria-labelledby="faq-title">
+  <h2 id="faq-title">{c.h2}</h2>
+  <div class="list">
+    {
+      c.items.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <div class="answer">
+            <p>{f.a}</p>
+            <p class="review">{c.reviewNote}</p>
+          </div>
+        </details>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .faq {
+    padding-block: var(--section-wide) var(--section-tight);
+    display: grid;
+    gap: var(--space-6);
+  }
+  @media (min-width: 62rem) {
+    .faq {
+      grid-template-columns: 1fr 2fr;
+      align-items: start;
+    }
+  }
+  details {
+    border-top: 1px solid var(--color-line);
+  }
+  details:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--text-lg);
+    padding-block: var(--space-4);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::after {
+    content: '+';
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    line-height: 1;
+    color: var(--color-accent);
+  }
+  details[open] summary::after {
+    content: '−';
+  }
+  .answer {
+    padding-bottom: var(--space-5);
+    display: grid;
+    gap: var(--space-2);
+    max-width: var(--measure);
+  }
+  .review {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+import type { HomeContent } from '../../i18n/content/home';
+interface Props {
+  content: HomeContent['findings'];
+}
+const { content: c } = Astro.props;
+---
+
+<section class="findings container" aria-labelledby="findings-title">
+  <div class="head">
+    <h2 id="findings-title">{c.h2}</h2>
+    <p>{c.intro}</p>
+  </div>
+  <ol class="cases">
+    {
+      c.items.map((item) => (
+        <li class="case">
+          <div class="cell">
+            <p class="label">{c.labels.found}</p>
+            <p>{item.found}</p>
+          </div>
+          <span class="arrow" aria-hidden="true">→</span>
+          <div class="cell">
+            <p class="label">{c.labels.risk}</p>
+            <p>{item.risk}</p>
+          </div>
+          <span class="arrow" aria-hidden="true">→</span>
+          <div class="cell fix">
+            <p class="label">{c.labels.fix}</p>
+            <p>{item.fix}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .findings {
+    padding-block: var(--section-wide) var(--section-tight);
+    display: grid;
+    gap: var(--space-7);
+  }
+  .head {
+    display: grid;
+    gap: var(--space-3);
+    max-width: var(--measure);
+  }
+  .head p {
+    color: var(--color-muted);
+  }
+  .cases {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    counter-reset: case;
+  }
+  .case {
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-line);
+  }
+  .case:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+  @media (min-width: 52rem) {
+    .case {
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: var(--space-5);
+      align-items: start;
+    }
+  }
+  .cell {
+    display: grid;
+    gap: var(--space-2);
+  }
+  .label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+  .fix .label {
+    color: var(--color-accent);
+  }
+  .arrow {
+    color: var(--color-muted);
+    font-size: var(--text-lg);
+  }
+  @media (max-width: 51.99rem) {
+    .arrow {
+      transform: rotate(90deg);
+      justify-self: start;
+      line-height: 1;
+    }
+  }
+</style>

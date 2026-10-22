@@ -19,11 +19,10 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'de', locales: { de: 'de', en: 'en' } },
-      // Persönliche Hotelseiten, Danke-Seiten und die Token-Vorschau nicht in die Sitemap.
+      // Persönliche Hotelseiten, Danke-Seiten und 404 nicht in die Sitemap.
       filter: (page) =>
         !page.includes('/h/') &&
         !/\/(danke|thank-you)\/$/.test(page) &&
-        !page.includes('/tokens-preview/') &&
         !page.endsWith('/404/'),
       // Übersetzte Slugs (impressum ↔ imprint) kennt die i18n-Option nicht.
       // Daher die hreflang-Paare aus der Routenkarte setzen, inkl. x-default.

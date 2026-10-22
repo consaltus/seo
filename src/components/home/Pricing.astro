@@ -1,0 +1,73 @@
+---
+import { pricing } from '../../config/site';
+import type { HomeContent } from '../../i18n/content/home';
+import type { Lang } from '../../i18n/ui';
+interface Props {
+  content: HomeContent['pricing'];
+  services: HomeContent['services']['items'];
+  lang: Lang;
+}
+const { content: c, services, lang } = Astro.props;
+---
+
+<section class="pricing container" id="preise" aria-labelledby="pricing-title">
+  <h2 id="pricing-title">{c.h2}</h2>
+  {
+    pricing.showPrices ? (
+      <table>
+        <tbody>
+          {services.map((s) => (
+            <tr>
+              <th scope="row">{s.name}</th>
+              <td>{pricing.services[s.id][lang]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <div class="off">
+        <p class="big">{c.off}</p>
+        <p>{c.offNote}</p>
+      </div>
+    )
+  }
+</section>
+
+<style>
+  .pricing {
+    padding-block: var(--section-tight);
+    display: grid;
+    gap: var(--space-5);
+  }
+  @media (min-width: 52rem) {
+    .pricing {
+      grid-template-columns: 1fr 2fr;
+      align-items: baseline;
+    }
+  }
+  .off {
+    display: grid;
+    gap: var(--space-2);
+    max-width: var(--measure);
+  }
+  .big {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+  th {
+    font-weight: 600;
+  }
+  td {
+    text-align: right;
+  }
+</style>

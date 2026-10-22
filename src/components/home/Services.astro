@@ -1,0 +1,150 @@
+---
+import { pricing } from '../../config/site';
+import type { HomeContent } from '../../i18n/content/home';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+interface Props {
+  content: HomeContent['services'];
+  lang: Lang;
+}
+const { content: c, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="services" id="leistungen" aria-labelledby="services-title">
+  <div class="container">
+    <div class="head">
+      <h2 id="services-title">{c.h2}</h2>
+      <p>{c.intro}</p>
+    </div>
+    <ol class="stairs">
+      {
+        c.items.map((s, i) => (
+          <li class={`step step-${i + 1}`}>
+            <p class="step-no">
+              {t('step')} {i + 1}
+            </p>
+            <h3>{s.name}</h3>
+            <p class="summary">{s.summary}</p>
+            <dl>
+              <div>
+                <dt>{c.labels.what}</dt>
+                <dd>
+                  <ul>
+                    {s.what.map((w) => (
+                      <li>{w}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+              <div>
+                <dt>{c.labels.result}</dt>
+                <dd>{s.result}</dd>
+              </div>
+              <div>
+                <dt>{c.labels.audience}</dt>
+                <dd>{s.audience}</dd>
+              </div>
+              <div>
+                <dt>{c.labels.duration}</dt>
+                <dd>{s.duration}</dd>
+              </div>
+              {pricing.showPrices && (
+                <div>
+                  <dt>{t('price')}</dt>
+                  <dd>{pricing.services[s.id][lang]}</dd>
+                </div>
+              )}
+            </dl>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-block: var(--section-normal);
+  }
+  .head {
+    display: grid;
+    gap: var(--space-3);
+    max-width: var(--measure);
+    margin-bottom: var(--space-8);
+  }
+  .stairs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+  .step {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    padding: var(--space-5);
+    border-top: 3px solid var(--color-accent);
+    border-radius: var(--radius-s) var(--radius-s) 0 0;
+  }
+  .step-1 {
+    background: var(--color-bg);
+    border-left: 1px solid var(--color-line);
+    border-right: 1px solid var(--color-line);
+  }
+  .step-2 {
+    background: var(--color-surface);
+  }
+  .step-3 {
+    background: var(--color-accent-soft);
+  }
+  /* Mobil: Stufen rücken nach rechts ein. */
+  @media (max-width: 55.99rem) {
+    .step-2 { margin-left: var(--space-5); }
+    .step-3 { margin-left: var(--space-7); }
+  }
+  /* Desktop: Treppe. Stufe 3 beginnt am höchsten, alle enden auf derselben Grundlinie. */
+  @media (min-width: 56rem) {
+    .stairs {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: var(--space-8) var(--space-8) auto;
+      gap: 0;
+      align-items: stretch;
+      border-bottom: 1px solid var(--color-text);
+    }
+    .step-1 { grid-column: 1; grid-row: 3; }
+    .step-2 { grid-column: 2; grid-row: 2 / 4; }
+    .step-3 { grid-column: 3; grid-row: 1 / 4; }
+  }
+  .step-no {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 600;
+  }
+  .summary {
+    font-size: var(--text-lg);
+  }
+  dl {
+    margin: var(--space-3) 0 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+  dt {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+  dd {
+    margin: var(--space-1) 0 0;
+  }
+  dd ul {
+    margin: 0;
+    padding-left: 1.1em;
+  }
+</style>

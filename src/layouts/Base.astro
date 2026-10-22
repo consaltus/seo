@@ -1,10 +1,12 @@
 ---
-import '@fontsource-variable/fraunces';
-import '@fontsource-variable/source-sans-3';
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/public-sans';
 import '../styles/global.css';
 import SEOHead from '../components/SEOHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import type { Lang, RouteKey } from '../i18n/ui';
-import { useTranslations } from '../i18n/utils';
+import { localizedPath, useTranslations } from '../i18n/utils';
 
 interface Props {
   title: string;
@@ -14,10 +16,13 @@ interface Props {
   path?: string;
   noindex?: boolean;
   jsonLd?: object | object[];
+  ctaHref?: string;
 }
 
 const props = Astro.props;
 const t = useTranslations(props.lang);
+const altLang: Lang = props.lang === 'de' ? 'en' : 'de';
+const altHref = localizedPath(props.routeKey ?? 'home', altLang);
 ---
 
 <!doctype html>
@@ -30,10 +35,10 @@ const t = useTranslations(props.lang);
   </head>
   <body>
     <a class="skip-link" href="#main">{t('nav.skip')}</a>
-    <slot name="header" />
+    <Header lang={props.lang} altHref={altHref} altLang={altLang} ctaHref={props.ctaHref} />
     <main id="main">
       <slot />
     </main>
-    <slot name="footer" />
+    <Footer lang={props.lang} altHref={altHref} altLang={altLang} />
   </body>
 </html>

@@ -1,0 +1,41 @@
+---
+import ContactForm from '../ContactForm.astro';
+import type { HomeContent } from '../../i18n/content/home';
+import type { Lang } from '../../i18n/ui';
+interface Props {
+  content: HomeContent['contact'];
+  lang: Lang;
+}
+const { content: c, lang } = Astro.props;
+---
+
+<section class="contact" id="kontakt" aria-labelledby="contact-title">
+  <div class="container layout">
+    <div class="text">
+      <h2 id="contact-title">{c.h2}</h2>
+      <p>{c.intro}</p>
+    </div>
+    <ContactForm lang={lang} />
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding-block: var(--section-normal) var(--section-wide);
+  }
+  .layout {
+    display: grid;
+    gap: var(--space-7);
+  }
+  @media (min-width: 62rem) {
+    .layout {
+      grid-template-columns: 1fr 2fr;
+      align-items: start;
+    }
+  }
+  .text {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 36ch;
+  }
+</style>

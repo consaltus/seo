@@ -1,0 +1,63 @@
+---
+import type { HomeContent } from '../../i18n/content/home';
+interface Props {
+  content: HomeContent['about'];
+}
+const { content: c } = Astro.props;
+// Sobald ein echtes Foto vorliegt: nach src/assets/ legen und hier mit <Image> von astro:assets einbinden.
+---
+
+<section class="about" id="ueber-mich" aria-labelledby="about-title">
+  <div class="container layout">
+    <div class="photo" role="img" aria-label={c.photoAlt}>
+      <span>{c.photoPlaceholder}</span>
+    </div>
+    <div class="text">
+      <h2 id="about-title">{c.h2}</h2>
+      <p class="name">{c.name}<span>{c.role}</span></p>
+      {c.bio.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: var(--color-surface);
+    padding-block: var(--section-normal);
+  }
+  .layout {
+    display: grid;
+    gap: var(--space-7);
+  }
+  @media (min-width: 52rem) {
+    .layout {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      align-items: center;
+    }
+  }
+  .photo {
+    aspect-ratio: 4 / 5;
+    max-width: 26rem;
+    border-radius: var(--radius-l);
+    border: 1px dashed var(--color-muted);
+    display: grid;
+    place-items: center;
+    padding: var(--space-5);
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .text {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--measure);
+  }
+  .name {
+    font-weight: 600;
+    display: grid;
+  }
+  .name span {
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+</style>

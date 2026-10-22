@@ -1,0 +1,46 @@
+---
+// Startseite, für DE und EN identisch aufgebaut.
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../CtaBand.astro';
+import Hero from './Hero.astro';
+import Problem from './Problem.astro';
+import Findings from './Findings.astro';
+import Services from './Services.astro';
+import Pricing from './Pricing.astro';
+import About from './About.astro';
+import Faq from './Faq.astro';
+import Contact from './Contact.astro';
+import { home } from '../../i18n/content/home';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+import { homeSchema } from '../../lib/schema';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const c = home[lang];
+if (!c) throw new Error(`Kein Startseiten-Inhalt für ${lang}`);
+const cta = t('nav.cta');
+---
+
+<Base title={t('home.title')} description={t('home.description')} lang={lang} routeKey="home" jsonLd={homeSchema(lang, c, t('site.name'))}>
+  <Hero h1={c.hero.h1} sub={c.hero.sub} micro={c.hero.micro} cta={cta} />
+  <Problem content={c.problem} />
+  <div class="cta-gap"><CtaBand text={c.ctaAfterProblem} label={cta} /></div>
+  <Findings content={c.findings} />
+  <Services content={c.services} lang={lang} />
+  <CtaBand text={c.ctaAfterServices} label={cta} />
+  <Pricing content={c.pricing} services={c.services.items} lang={lang} />
+  <About content={c.about} />
+  <Faq content={c.faq} />
+  <div class="cta-gap"><CtaBand text={c.ctaAfterFaq} label={cta} /></div>
+  <Contact content={c.contact} lang={lang} />
+</Base>
+
+<style>
+  .cta-gap {
+    padding-block: var(--space-7);
+  }
+</style>

@@ -1,0 +1,194 @@
+---
+import type { HomeContent } from '../../i18n/content/home';
+interface Props {
+  content: HomeContent['problem'];
+}
+const { content: c } = Astro.props;
+const f = c.figure;
+---
+
+<section class="problem" aria-labelledby="problem-title">
+  <div class="container layout">
+    <div class="text">
+      <h2 id="problem-title">{c.h2}</h2>
+      <p class="intro">{c.intro}</p>
+      <ol class="items">
+        {
+          c.items.map((item, i) => (
+            <li>
+              <span class="num" aria-hidden="true">{i + 1}</span>
+              <div>
+                <p class="where">{item.where}</p>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <figure class="mock" aria-hidden="true">
+      <div class="panel">
+        <div class="row name">
+          <span class="mark">1</span>
+          <span><strong>{f.name}</strong> <em>({f.nameNote})</em></span>
+        </div>
+        <div class="row prices">
+          <span class="mark">2</span>
+          <div>
+            <p class="label">{f.priceLabel}</p>
+            <ul>{f.portals.map((p) => <li>{p}</li>)}</ul>
+            <p class="missing">{f.priceNote}</p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="mark">3</span>
+          <code>&lt;script type="application/ld+json"&gt; ?</code>
+        </div>
+        <div class="row">
+          <span class="mark">4</span>
+          <span class="langs"><b>DE</b> <s>EN</s> <s>IT</s></span>
+        </div>
+        <div class="row ai">
+          <p class="label">{f.aiLabel}</p>
+          <p>{f.aiText}</p>
+        </div>
+      </div>
+      <figcaption>{c.figureCaption}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .problem {
+    background: var(--color-surface);
+    padding-block: var(--section-normal);
+  }
+  .layout {
+    display: grid;
+    gap: var(--space-8);
+  }
+  @media (min-width: 62rem) {
+    .layout {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      align-items: start;
+    }
+    .mock {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .text {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .intro {
+    font-size: var(--text-lg);
+    max-width: var(--measure);
+  }
+  .items {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-6);
+  }
+  .items li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--space-4);
+  }
+  .items li > div {
+    display: grid;
+    gap: var(--space-2);
+    max-width: var(--measure);
+  }
+  .num,
+  .mark {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: grid;
+    place-items: center;
+  }
+  .where {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+
+  .mock {
+    margin: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .panel {
+    background: var(--color-bg);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-l);
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-4);
+    font-size: var(--text-sm);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    gap: var(--space-3);
+    align-items: center;
+  }
+  .mark {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: var(--text-sm);
+  }
+  .name em {
+    color: var(--color-muted);
+  }
+  .prices {
+    align-items: start;
+  }
+  .prices ul {
+    list-style: none;
+    margin: var(--space-2) 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-1);
+  }
+  .prices li {
+    border-bottom: 1px dashed var(--color-line);
+    padding-block: var(--space-1);
+  }
+  .missing {
+    color: var(--color-error);
+    font-weight: 600;
+  }
+  .label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+  code {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    overflow-wrap: anywhere;
+  }
+  s {
+    color: var(--color-muted);
+  }
+  .ai {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+    border-top: 1px solid var(--color-line);
+    padding-top: var(--space-4);
+    font-style: italic;
+  }
+  figcaption {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+</style>

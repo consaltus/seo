@@ -1,0 +1,47 @@
+---
+interface Props {
+  h1: string;
+  sub: string;
+  micro: string;
+  cta: string;
+}
+const { h1, sub, micro, cta } = Astro.props;
+---
+
+<section class="hero container" aria-labelledby="hero-title">
+  <h1 id="hero-title">{h1}</h1>
+  <p class="sub">{sub}</p>
+  <div class="action">
+    <a class="btn btn-large" href="#kontakt">{cta}</a>
+    <p class="micro">{micro}</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--section-wide) var(--section-normal);
+  }
+  h1 {
+    max-width: 14ch;
+  }
+  .sub {
+    font-size: var(--text-lg);
+    max-width: var(--measure);
+  }
+  .action {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+    margin-top: var(--space-3);
+  }
+  .btn-large {
+    font-size: var(--text-lg);
+  }
+  .micro {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    max-width: 48ch;
+  }
+</style>

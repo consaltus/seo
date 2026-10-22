@@ -1,0 +1,207 @@
+---
+// Netlify Forms. Alle Instanzen nutzen denselben Formularnamen und dieselben Felder,
+// damit Netlify sie als ein Formular erkennt. Kein CAPTCHA, nur Honeypot.
+import type { Lang } from '../i18n/ui';
+import { localizedPath, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Vorbelegung des Felds Hotel (persönliche Seiten). */
+  hotel?: string;
+  /** Woher die Anfrage kommt, z. B. "startseite" oder der Slug einer persönlichen Seite. */
+  source?: string;
+}
+const { lang, hotel = '', source = 'startseite' } = Astro.props;
+const t = useTranslations(lang);
+const optional = `(${t('form.optional')})`;
+---
+
+<form
+  class="contact-form"
+  name="kontakt"
+  method="POST"
+  action={localizedPath('danke', lang)}
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  data-err-required={t('form.err.required')}
+  data-err-email={t('form.err.email')}
+  data-err-website={t('form.err.website')}
+>
+  <input type="hidden" name="form-name" value="kontakt" />
+  <input type="hidden" name="sprache" value={lang} />
+  <input type="hidden" name="quelle" value={source} />
+  <p class="hp" aria-hidden="true">
+    <label>{t('form.honeypot')} <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class="field">
+    <label for="f-name">{t('form.name')}</label>
+    <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
+    <p class="error" id="f-name-err" aria-live="polite"></p>
+  </div>
+
+  <div class="field">
+    <label for="f-email">{t('form.email')}</label>
+    <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-err" />
+    <p class="error" id="f-email-err" aria-live="polite"></p>
+  </div>
+
+  <div class="field">
+    <label for="f-hotel">{t('form.hotel')}</label>
+    <input id="f-hotel" name="hotel" type="text" autocomplete="organization" required value={hotel} aria-describedby="f-hotel-err" />
+    <p class="error" id="f-hotel-err" aria-live="polite"></p>
+  </div>
+
+  <div class="field">
+    <label for="f-website">{t('form.website')}</label>
+    <input
+      id="f-website"
+      name="website"
+      type="text"
+      inputmode="url"
+      autocomplete="url"
+      placeholder="www.hotel.at"
+      required
+      data-type="website"
+      aria-describedby="f-website-err"
+    />
+    <p class="error" id="f-website-err" aria-live="polite"></p>
+  </div>
+
+  <div class="field">
+    <label for="f-phone">{t('form.phone')} <span class="opt">{optional}</span></label>
+    <input id="f-phone" name="telefon" type="tel" autocomplete="tel" />
+  </div>
+
+  <div class="field wide">
+    <label for="f-message">{t('form.message')} <span class="opt">{optional}</span></label>
+    <textarea id="f-message" name="nachricht" rows="5"></textarea>
+  </div>
+
+  <p class="summary-error wide" role="alert" hidden>{t('form.err.summary')}</p>
+
+  <div class="submit wide">
+    <button class="btn" type="submit">{t('form.submit')}</button>
+    <p class="privacy">
+      {t('form.privacy')} <a href={localizedPath('datenschutz', lang)}>{t('form.privacyLink')}</a>.
+    </p>
+  </div>
+</form>
+
+<script>
+  // Inline-Validierung: Prüfung beim Verlassen eines Felds, Fehler direkt am Feld.
+  // Eingaben bleiben erhalten. Ohne JavaScript greift die native Browser-Validierung.
+  const websitePattern = /^(https?:\/\/)?[^\s.\/]+(\.[^\s.\/]+)+(\/\S*)?$/i;
+
+  for (const form of document.querySelectorAll<HTMLFormElement>('form.contact-form')) {
+    form.noValidate = true;
+    const msg = form.dataset;
+    const fields = form.querySelectorAll<HTMLInputElement>('input[required]');
+
+    const check = (input: HTMLInputElement) => {
+      const value = input.value.trim();
+      let error = '';
+      if (!value) error = msg.errRequired ?? '';
+      else if (input.type === 'email' && !input.validity.valid) error = msg.errEmail ?? '';
+      else if (input.dataset.type === 'website' && !websitePattern.test(value)) error = msg.errWebsite ?? '';
+      const out = form.querySelector<HTMLElement>(`#${input.id}-err`);
+      if (out) out.textContent = error;
+      if (error) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+      return !error;
+    };
+
+    for (const input of fields) {
+      input.addEventListener('blur', () => check(input));
+      // Nach einem Fehler sofort entwarnen, sobald die Eingabe passt.
+      input.addEventListener('input', () => {
+        if (input.getAttribute('aria-invalid') === 'true') check(input);
+      });
+    }
+
+    form.addEventListener('submit', (event) => {
+      const results = [...fields].map(check);
+      const summary = form.querySelector<HTMLElement>('.summary-error');
+      if (results.includes(false)) {
+        event.preventDefault();
+        if (summary) summary.hidden = false;
+        form.querySelector<HTMLInputElement>('[aria-invalid="true"]')?.focus();
+      } else if (summary) {
+        summary.hidden = true;
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact-form {
+    display: grid;
+    gap: var(--space-5);
+  }
+  @media (min-width: 44rem) {
+    .contact-form {
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--space-6);
+    }
+    .wide {
+      grid-column: 1 / -1;
+    }
+  }
+  .field {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+  label {
+    font-weight: 600;
+  }
+  .opt {
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+  input,
+  textarea {
+    font: inherit;
+    color: var(--color-text);
+    background: var(--color-field);
+    border: 1px solid var(--color-muted);
+    border-radius: var(--radius-s);
+    padding: 0.7em 0.8em;
+    width: 100%;
+  }
+  input::placeholder {
+    color: var(--color-muted);
+  }
+  input[aria-invalid='true'] {
+    border-color: var(--color-error);
+    border-width: 2px;
+  }
+  .error {
+    color: var(--color-error);
+    font-size: var(--text-sm);
+    min-height: 0;
+  }
+  .error:empty {
+    display: none;
+  }
+  .summary-error {
+    color: var(--color-error);
+    font-weight: 600;
+  }
+  .submit {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+  }
+  .privacy {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+</style>

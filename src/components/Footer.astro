@@ -1,0 +1,67 @@
+---
+import { owner } from '../config/site';
+import { languages, type Lang } from '../i18n/ui';
+import { localizedPath, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  altHref: string;
+  altLang: Lang;
+}
+const { lang, altHref, altLang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<footer class="site-footer">
+  <div class="container inner">
+    <p class="owner">{t('site.name')} · {owner.name} · {owner.city}, {owner.region}</p>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href={localizedPath('impressum', lang)}>{t('footer.impressum')}</a></li>
+        <li><a href={localizedPath('datenschutz', lang)}>{t('footer.datenschutz')}</a></li>
+        <li class="langs">
+          <span class="visually-hidden">{t('footer.lang')}:</span>
+          <span aria-current="true" class="current">{lang.toUpperCase()}</span>
+          <a href={altHref} hreflang={altLang} lang={altLang}>{languages[altLang]}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-line);
+    padding-block: var(--space-7);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+  }
+  a {
+    color: var(--color-text);
+    display: inline-block;
+    padding-block: var(--space-1);
+  }
+  .langs {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+  }
+  .current {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+</style>

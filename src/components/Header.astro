@@ -1,0 +1,71 @@
+---
+import type { Lang } from '../i18n/ui';
+import { localizedPath, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  altHref: string;
+  altLang: Lang;
+  /** Ziel der CTA, Standard: Formular auf der Startseite. */
+  ctaHref?: string;
+}
+const { lang, altHref, altLang, ctaHref } = Astro.props;
+const t = useTranslations(lang);
+const home = localizedPath('home', lang);
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href={home}>{t('site.name')}</a>
+    <nav class="actions" aria-label={t('nav.home')}>
+      <a class="lang" href={altHref} hreflang={altLang} lang={altLang} aria-label={t('lang.switchLabel')}>
+        {altLang.toUpperCase()}
+      </a>
+      <a class="btn btn-small" href={ctaHref ?? `${home}#kontakt`}>{t('nav.cta')}</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 4rem;
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-shrink: 0;
+  }
+  .lang {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text);
+    padding: var(--space-2);
+  }
+  .btn-small {
+    padding: 0.55em 1em;
+    font-size: var(--text-sm);
+  }
+</style>

@@ -1,12 +1,10 @@
 /*
  * Design-Tokens. Vor jeder Gestaltung festgelegt.
- * Zwei Akzentfarben (A/B) und zwei Schriftpaare (1/2) stehen zur Wahl.
- * Nach der Entscheidung bleibt nur die gewählte Variante in :root, der Rest wird gelöscht.
+ * Gewählt: Akzent A (#0E4F5C) und Schriftpaar Newsreader + Public Sans.
  * Kontraste (WCAG 2.x) gegen --color-bg #FAF7F2:
- *   --color-text  #1C1B19  16.1 : 1
- *   --color-muted #5A5650   6.8 : 1
- *   Akzent A #0E4F5C        8.6 : 1 auf bg, Weiß auf Akzent 9.2 : 1  (AA und AAA)
- *   Akzent B #006B6E        5.9 : 1 auf bg, Weiß auf Akzent 6.3 : 1  (AA)
+ *   --color-text   #1C1B19  16.1 : 1
+ *   --color-muted  #5A5650   6.8 : 1
+ *   --color-accent #0E4F5C   8.6 : 1, Weiß auf Akzent 9.2 : 1
  */
 
 :root {
@@ -16,25 +14,16 @@
   --color-text: #1c1b19;        /* fast Schwarz */
   --color-muted: #5a5650;
   --color-line: #ddd6ca;
+  --color-field: #ffffff;       /* Hintergrund Eingabefelder */
   --color-error: #a3261b;       /* 6.6 : 1 auf bg */
 
-  --accent-a: #0e4f5c;          /* „Tiefe“: dunkles Seeblau-Türkis */
-  --accent-a-soft: #e3ecec;
-  --accent-b: #006b6e;          /* „Ufer“: helleres, grünlicheres Türkis */
-  --accent-b-soft: #e0eeec;
-
-  --color-accent: var(--accent-a);
-  --color-accent-soft: var(--accent-a-soft);
+  --color-accent: #0e4f5c;      /* dunkles Seeblau-Türkis */
+  --color-accent-soft: #e3ecec;
   --color-on-accent: #ffffff;
 
-  /* Schriften: Paar 1 = Fraunces + Source Sans 3, Paar 2 = Newsreader + Public Sans */
-  --font-serif-1: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
-  --font-sans-1: 'Source Sans 3 Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif-2: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
-  --font-sans-2: 'Public Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
-
-  --font-display: var(--font-serif-1);
-  --font-body: var(--font-sans-1);
+  /* Schriften */
+  --font-display: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  --font-body: 'Public Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Schriftgrößen (fluid) */
   --text-sm: 0.9375rem;
@@ -71,14 +60,4 @@
   --measure: 62ch;
   --container: 72rem;
   --gutter: clamp(1rem, 4vw, 2rem);
-}
-
-/* Nur für die Vorschau der Varianten (tokens-preview). */
-[data-accent='b'] {
-  --color-accent: var(--accent-b);
-  --color-accent-soft: var(--accent-b-soft);
-}
-[data-fonts='2'] {
-  --font-display: var(--font-serif-2);
-  --font-body: var(--font-sans-2);
 }
