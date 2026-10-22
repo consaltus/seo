@@ -39,6 +39,17 @@ Hinweis Netlify-Analytics: nicht aktivieren, solange in der Datenschutzerklärun
 | `src/styles/tokens.css` | Design-Tokens (Farben, Schriften, Radien, Abstände) |
 | `CLAUDE.md` | Verbindliche Regeln für Texte und Gestaltung |
 
+## Persönliche Hotelseiten (`/h/<slug>/`)
+
+Eine Datei in `src/content/hotels/` ergibt eine Seite mit dem persönlichen Befund für ein Hotel.
+
+- Neue Seite anlegen: `npm run new-hotel -- "Hotel Seeblick"` (optional `en` als zweites Argument). Das Skript erzeugt einen Slug mit 12 Zeichen Zufallsteil.
+- Schema in `src/content.config.ts`: 3 bis 5 Befunde, Screenshot optional (Datei nach `src/assets/hotels/` legen und in `screenshot:` relativ verlinken).
+- Die Seiten haben `noindex, nofollow` im HTML und als `X-Robots-Tag`-Header (`netlify.toml`), stehen nicht in der Sitemap und sind nirgends verlinkt.
+- `robots.txt` sperrt `/h/` bewusst nicht. Sonst sieht Google das `noindex` nicht, falls ein Link doch nach außen gelangt.
+- Das Formular ist vorbefüllt (Feld Hotel) und meldet im versteckten Feld `quelle` den Slug.
+- `hotel-beispiel.md` ist ein DEMO-Eintrag mit erfundenem Hotel. Vor dem Livegang löschen.
+
 ## Rechtliches: Prüfliste für das Impressum
 
 Die Texte auf der Site sind Entwürfe. Sie sind nicht juristisch geprüft. Vor dem Livegang von einer fachkundigen Stelle (z. B. WKO-Gründerservice) prüfen lassen.
@@ -99,4 +110,5 @@ Vor dem Livegang ersetzen. `grep -rn PLACEHOLDER src public astro.config.mjs` ze
 | `PLACEHOLDER_SPEICHERDAUER_ANFRAGEN` / `PLACEHOLDER_REQUEST_RETENTION` | Datenschutz DE/EN | Eigene Löschfrist für Anfragen |
 | `PLACEHOLDER_ANALYTICS_ENTSCHEIDUNG` / `PLACEHOLDER_ANALYTICS_DECISION` (bzw. `_BESCHREIBUNG` / `_DESCRIPTION`) | Datenschutz DE/EN | Entscheidung zur Statistik; bei Aktivierung Beschreibung des cookieless Tools |
 | `PLACEHOLDER_DATUM` / `PLACEHOLDER_DATE` | Datenschutz DE/EN | Stand der Datenschutzerklärung |
+| `PLACEHOLDER_DATUM_PRUEFUNG`, `PLACEHOLDER_SCREENSHOT_n`, `PLACEHOLDER_TITEL_n` usw. | `src/content/hotels/*.md` | Inhalte der persönlichen Hotelseiten |
 | Analytics-Entscheidung | `src/config/site.ts` (`analytics.enabled`) | Standard: keine Statistik |
