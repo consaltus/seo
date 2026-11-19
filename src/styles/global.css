@@ -127,8 +127,9 @@ button { font: inherit; }
 .services { padding: var(--section-y) 0; }
 .services .top { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 32px; align-items: end; margin-bottom: 56px; }
 .services .top p { margin: 0; color: var(--ink-2); }
-.svc-list { border-top: 1px solid var(--hairline); }
-.svc { border-bottom: 1px solid var(--hairline); border-radius: var(--radius-lg); transition: background 0.35s ease; }
+.svc { position: relative; border-radius: var(--radius-lg); transition: background 0.35s ease; }
+.svc + .svc::before { content: ''; position: absolute; top: 0; left: 28px; right: 28px; height: 1px; background: var(--hairline); transition: opacity 0.3s ease; }
+.svc.is-open::before, .svc.is-open + .svc::before { opacity: 0; }
 .svc.is-open { background: var(--tint-50); animation: pop 0.35s ease; }
 @keyframes pop { 0% { transform: scale(0.985); } 60% { transform: scale(1.004); } 100% { transform: scale(1); } }
 .svc-head { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; grid-template-columns: 88px minmax(0, 4fr) minmax(0, 5fr) 150px 44px; gap: 24px; align-items: center; padding: 26px 28px; font-family: var(--font-text); color: var(--ink); transition: transform 0.2s ease; }
@@ -158,6 +159,7 @@ button { font: inherit; }
 .svc-body .btn { align-self: flex-start; }
 @media (max-width: 900px) {
   .services .top { grid-template-columns: 1fr; margin-bottom: 40px; }
+  .svc + .svc::before { left: 16px; right: 16px; }
   .svc-head { grid-template-columns: 56px minmax(0, 1fr) 40px; grid-template-areas: 'num name plus' '. desc desc' '. price price'; gap: 10px 16px; padding: 22px 16px; }
   .svc-num { grid-area: num; font-size: 32px; }
   .svc-name { grid-area: name; }
