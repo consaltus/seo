@@ -39,7 +39,22 @@ button { font: inherit; }
 .nav { display: flex; align-items: center; gap: 28px; font-size: 16px; }
 .nav a:not(.btn) { color: var(--ink); text-decoration: none; }
 .nav a:not(.btn):hover { color: var(--brand); }
-@media (max-width: 760px) { .nav .nav-link { display: none; } .site-header .bar { min-height: 64px; } }
+.burger { display: none; }
+@media (max-width: 760px) {
+  .site-header .bar { min-height: 64px; position: relative; }
+  .burger { display: inline-flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; padding: 0; border: 1px solid var(--tint-line); border-radius: var(--radius-sm); background: var(--surface); cursor: pointer; }
+  .burger span { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform 0.25s ease, opacity 0.2s ease; }
+  .burger:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .menu-open .burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-open .burger span:nth-child(2) { opacity: 0; }
+  .menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav { display: none; position: absolute; top: calc(100% + 8px); left: var(--gutter); right: var(--gutter); flex-direction: column; align-items: stretch; gap: 0; padding: 8px 16px 16px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); }
+  .menu-open .nav { display: flex; animation: navIn 0.2s ease both; }
+  .nav .nav-link { padding: 14px 4px; font-size: 17px; border-bottom: 1px solid var(--hairline); }
+  .nav .nav-cta { margin-top: 14px; min-height: 48px; font-size: 16px; }
+}
+@keyframes navIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .menu-open .nav { animation: none; } .burger span { transition: none; } }
 
 /* Sky: Hero + KI als ein Verlauf */
 .sky { background: radial-gradient(900px 480px at 50% 0%, #eadccf 0%, rgba(234, 220, 207, 0) 70%), linear-gradient(180deg, var(--tint-100) 0, var(--tint-mid) 720px, var(--surface) 1500px); }
