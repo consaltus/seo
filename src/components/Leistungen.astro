@@ -1,0 +1,59 @@
+---
+import { services } from '../config/content';
+import { owner } from '../config/site';
+---
+<section id="leistungen" class="services" aria-labelledby="sv-title">
+  <div class="wrap">
+    <div class="top">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <p class="eyebrow">Leistungen</p>
+        <h2 id="sv-title" class="h2">In drei Schritten <span class="muted">zu einem Hotel, das Gäste richtig finden.</span></h2>
+      </div>
+      <p>Sie fangen mit dem Check an. Was danach kommt, entscheiden Sie, wenn Sie den Bericht gelesen haben. Preise {owner.vatNote}.</p>
+    </div>
+    <div class="svc-list">
+      {services.map((s, i) => (
+        <div class:list={['svc', { 'is-open': i === 0 }]} data-svc>
+          <button class="svc-head" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`svc-${s.id}`} id={`svc-h-${s.id}`}>
+            <span class="svc-num" aria-hidden="true">{s.num}</span>
+            <span class="svc-name"><b>{s.name}</b><small>{s.format}</small></span>
+            <span class="svc-desc">{s.desc}</span>
+            <span class:list={['svc-price', { free: s.free }]}>{s.price}</span>
+            <span class="svc-plus" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 1 V13 M1 7 H13"></path></svg></span>
+          </button>
+          <div class="svc-body" id={`svc-${s.id}`} role="region" aria-labelledby={`svc-h-${s.id}`} hidden={i !== 0}>
+            <div class="col1">
+              <span class="lbl">{s.listLabel}</span>
+              <ul>{s.list.map((l) => <li>{l}</li>)}</ul>
+            </div>
+            <div class="col2">
+              <div><span class="lbl">Sie erhalten</span><span>{s.result}</span></div>
+              <div><span class="lbl">Für wen</span><span>{s.who}</span></div>
+              <a class="btn" href="#kontakt">{s.cta}</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-svc]'));
+  items.forEach((item) => {
+    const btn = item.querySelector<HTMLButtonElement>('.svc-head')!;
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      items.forEach((o) => {
+        o.classList.remove('is-open');
+        o.querySelector('.svc-head')!.setAttribute('aria-expanded', 'false');
+        (o.querySelector('.svc-body') as HTMLElement).hidden = true;
+      });
+      if (!open) {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        (item.querySelector('.svc-body') as HTMLElement).hidden = false;
+      }
+    });
+  });
+</script>

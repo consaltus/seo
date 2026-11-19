@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import MiniFooter from '../components/MiniFooter.astro';
+---
+<Base title="Danke – Random Room" noindex>
+  <div class="legal-top">
+    <Header home={false} />
+    <main id="main" class="simple">
+      <div class="wrap inner">
+        <p class="eyebrow">Anfrage gesendet</p>
+        <h1 class="h1" style="font-size:clamp(40px,6vw,64px)">Danke. <span class="muted">Wir melden uns.</span></h1>
+        <p>Ihre Anfrage ist angekommen. Wir melden uns innerhalb von 24 Stunden und schlagen einen Termin vor.</p>
+        <a class="btn btn-ghost" href="/">Zur Startseite</a>
+      </div>
+    </main>
+  </div>
+  <MiniFooter />
+</Base>

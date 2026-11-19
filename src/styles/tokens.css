@@ -1,0 +1,51 @@
+/* Random Room – Design-Tokens (Palette Espresso). Werte nur hier ändern. */
+:root {
+  --surface: #ffffff;
+  --surface-2: #f2f3f6;
+  --tint-50: #faf6f2;
+  --tint-100: #f2eae3;
+  --tint-mid: #f8f3ef;
+  --tint-hl: #f1e6dc;
+  --tint-line: #dfc9ba;
+  --tint-panel: #f5ede5;
+  --tint-bar: #ebddd1;
+  --tint-deep: #a28c80;
+
+  --ink: #16181d;
+  --ink-2: #3a3d45;
+  --ink-muted: #6a6e78;
+  --ink-label: #4e5058;
+  --hairline: #e6e7eb;
+
+  --brand: #8c4a2b;
+  --brand-strong: #6e3820;
+  --on-brand: #ffffff;
+
+  --night: #6e5142;
+  --on-night: #f6f0eb;
+  --on-night-2: #e4d8cf;
+  --on-night-muted: #dccbbf;
+  --on-night-accent: #ebd8ca;
+  --night-field: rgba(246, 240, 235, 0.07);
+  --night-line: rgba(246, 240, 235, 0.18);
+
+  --bad: #b4432f;
+  --good: #2e7d5b;
+  --error-on-night: #f2b8a6;
+
+  --font-display: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
+  --font-text: 'Figtree Variable', system-ui, sans-serif;
+
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  --container: 1280px;
+  --gutter: clamp(16px, 5vw, 80px);
+  --section-y: clamp(72px, 9vw, 112px);
+
+  --shadow-soft: 0 24px 60px rgba(22, 24, 29, 0.06);
+  --glow: 0 0 0 4px rgba(140, 74, 43, 0.1), 0 6px 28px rgba(140, 74, 43, 0.28);
+}

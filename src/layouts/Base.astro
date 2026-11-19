@@ -1,0 +1,39 @@
+---
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/figtree';
+import '../styles/global.css';
+import { site } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  schema?: object | null;
+}
+const { title = site.title, description = site.description, noindex = false, schema = null } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#f2eae3" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_AT" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+  </head>
+  <body>
+    <a class="skip" href="#main">Zum Inhalt springen</a>
+    <slot />
+  </body>
+</html>

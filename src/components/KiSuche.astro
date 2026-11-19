@@ -1,0 +1,79 @@
+<section id="ki" class="ki" aria-labelledby="ki-title">
+  <div class="wrap inner">
+    <span class="pill-label">KI-Suche</span>
+    <h2 id="ki-title" class="h2">Ihr Hotel in den Antworten <span class="muted">von ChatGPT, Claude und Gemini.</span></h2>
+    <p class="lead">Geben Sie den Namen Ihres Hotels ein und sehen Sie, wie eine Antwort aussehen kann, wenn Website und Profile in Ordnung sind.</p>
+    <label class="ki-field">
+      <span>Ihr Hotel:</span>
+      <input id="ki-name" type="text" placeholder="Hotelname" autocomplete="organization" maxlength="60" />
+    </label>
+    <div class="ki-tabs" role="tablist" aria-label="KI-Assistent wählen">
+      <button class="ki-tab" role="tab" aria-selected="true" data-ai="ChatGPT" aria-controls="ki-card"><img src="/logos/chatgpt.webp" alt="" width="22" height="22" />ChatGPT</button>
+      <button class="ki-tab" role="tab" aria-selected="false" data-ai="Claude" aria-controls="ki-card"><img src="/logos/claude.webp" alt="" width="22" height="22" />Claude</button>
+      <button class="ki-tab" role="tab" aria-selected="false" data-ai="Gemini" aria-controls="ki-card"><img src="/logos/gemini.webp" alt="" width="22" height="22" />Gemini</button>
+    </div>
+    <div id="ki-card" class="ki-card" role="tabpanel" aria-live="polite">
+      <div class="head">
+        <div class="who">
+          <img id="ki-logo" src="/logos/chatgpt.webp" alt="" width="44" height="44" />
+          <div><b id="ki-label">ChatGPT</b><small>Beispielantwort</small></div>
+        </div>
+        <span id="ki-topic" class="topic">Familienurlaub</span>
+      </div>
+      <div id="ki-body" class="ki-swap" style="display:flex;flex-direction:column;gap:18px">
+        <div id="ki-q" class="ki-q">Familienfreundliches Hotel am See in Kärnten, direkt buchbar?</div>
+        <div class="ki-a">
+          <span class="tag">Antwort von <span id="ki-tag">ChatGPT</span></span>
+          <p id="ki-a"><span class="hl">Hotel Beispiel</span> liegt direkt am See und hat Familienzimmer sowie einen Spielbereich im Garten. Laut der offiziellen Website ist Frühstück inklusive, und <span class="hl">Hotel Beispiel</span> lässt sich dort direkt buchen.</p>
+        </div>
+      </div>
+      <div class="ki-foot">
+        <span class="ki-src"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M6 8 L8 6 M5 4.5 L6.5 3 a2.5 2.5 0 0 1 3.5 3.5 L8.5 8 M5.5 6 L4 7.5 a2.5 2.5 0 0 0 3.5 3.5 L9 9.5" fill="none" stroke="#6A6E78" stroke-width="1.3" stroke-linecap="round"></path></svg>Quelle: <span id="ki-src">hotel-beispiel.at</span></span>
+        <div class="links">
+          <a href="#kontakt">Lieber persönlich? Termin vereinbaren</a>
+          <a class="btn" href="#kontakt">Sichtbarkeitscheck anfragen →</a>
+        </div>
+      </div>
+    </div>
+    <p class="note">Beispielhafte Darstellung. Ob und wie eine KI ein Hotel nennt, entscheidet der jeweilige Anbieter. Wir sorgen dafür, dass die Angaben über Ihr Hotel korrekt und auffindbar sind. ChatGPT, Claude und Gemini sind Marken ihrer jeweiligen Inhaber.</p>
+  </div>
+</section>
+
+<script>
+  const models: Record<string, { logo: string; topic: string; q: string; parts: string[] }> = {
+    ChatGPT: { logo: '/logos/chatgpt.webp', topic: 'Familienurlaub', q: 'Familienfreundliches Hotel am See in Kärnten, direkt buchbar?', parts: ['', ' liegt direkt am See und hat Familienzimmer sowie einen Spielbereich im Garten. Laut der offiziellen Website ist Frühstück inklusive, und ', ' lässt sich dort direkt buchen.'] },
+    Claude: { logo: '/logos/claude.webp', topic: 'Seminar & Tagung', q: 'Kleines Hotel mit Seminarraum für 20 Personen in Kärnten?', parts: ['', ' bietet einen Seminarraum mit Tageslicht für bis zu 20 Personen. Die Website nennt Tagungspauschalen und Kontaktdaten. Anfragen gehen direkt an ', '.'] },
+    Gemini: { logo: '/logos/gemini.webp', topic: 'Wellness', q: 'Ruhiges Wellnesshotel in Kärnten mit Seeblick?', parts: ['', ' hat eine Sauna mit Seeblick und ruhige Zimmer zur Wasserseite. Auf der offiziellen Website von ', ' sind Preise und freie Termine sichtbar.'] },
+  };
+  let current = 'ChatGPT';
+  const $ = (id: string) => document.getElementById(id)!;
+  const input = $('ki-name') as HTMLInputElement;
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.ki-tab'));
+
+  function slug(s: string) {
+    return s.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'hotel-beispiel';
+  }
+  function render(animate: boolean) {
+    const m = models[current];
+    const name = input.value.trim() || 'Hotel Beispiel';
+    ($('ki-logo') as HTMLImageElement).src = m.logo;
+    $('ki-label').textContent = current;
+    $('ki-tag').textContent = current;
+    $('ki-topic').textContent = m.topic;
+    $('ki-q').textContent = m.q;
+    $('ki-src').textContent = slug(name) + '.at';
+    const p = $('ki-a');
+    p.replaceChildren();
+    m.parts.forEach((t, i) => {
+      if (i > 0) { const s = document.createElement('span'); s.className = 'hl'; s.textContent = name; p.append(s); }
+      if (t) p.append(document.createTextNode(t));
+    });
+    if (animate) { const b = $('ki-body'); b.classList.remove('ki-swap'); void b.offsetWidth; b.classList.add('ki-swap'); }
+  }
+  tabs.forEach((t) => t.addEventListener('click', () => {
+    current = t.dataset.ai!;
+    tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+    render(true);
+  }));
+  input.addEventListener('input', () => render(false));
+</script>

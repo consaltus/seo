@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import KiSuche from '../components/KiSuche.astro';
+import Probleme from '../components/Probleme.astro';
+import Leistungen from '../components/Leistungen.astro';
+import Faq from '../components/Faq.astro';
+import UeberMich from '../components/UeberMich.astro';
+import Kontakt from '../components/Kontakt.astro';
+import { site } from '../config/site';
+import { services, faq } from '../config/content';
+
+const id = `${site.url}/#org`;
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfessionalService',
+      '@id': id,
+      name: site.name,
+      url: `${site.url}/`,
+      description: site.description,
+      inLanguage: 'de-AT',
+      areaServed: [{ '@type': 'Country', name: 'Österreich' }, { '@type': 'Country', name: 'Deutschland' }],
+      address: { '@type': 'PostalAddress', addressLocality: 'Klagenfurt am Wörthersee', addressRegion: 'Kärnten', addressCountry: 'AT' },
+      founder: { '@type': 'Person', '@id': `${site.url}/#andrii`, name: 'Andrii Kulagin', knowsLanguage: ['en', 'uk', 'ru'] },
+      makesOffer: services.map((s) => ({
+        '@type': 'Offer',
+        name: s.name,
+        description: s.desc,
+        priceCurrency: 'EUR',
+        ...(s.free
+          ? { price: '0' }
+          : { priceSpecification: { '@type': 'PriceSpecification', minPrice: s.id === 'basis' ? 490 : 249, priceCurrency: 'EUR', ...(s.id === 'betreuung' ? { unitText: 'Monat' } : {}) } }),
+        itemOffered: { '@type': 'Service', name: s.name, provider: { '@id': id } },
+      })),
+    },
+    {
+      '@type': 'FAQPage',
+      inLanguage: 'de-AT',
+      mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ],
+};
+---
+<Base schema={schema}>
+  <div class="sky">
+    <Header />
+    <main id="main">
+      <Hero />
+      <KiSuche />
+    </main>
+  </div>
+  <Probleme />
+  <Leistungen />
+  <Faq />
+  <UeberMich />
+  <Kontakt />
+</Base>

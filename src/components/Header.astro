@@ -1,0 +1,16 @@
+---
+interface Props { plain?: boolean; home?: boolean }
+const { plain = false, home = true } = Astro.props;
+const p = home ? '' : '/';
+---
+<header class:list={['site-header', { 'is-plain': plain }]}>
+  <div class="wrap bar">
+    <a href="/" class="logo">Random Room</a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a class="nav-link" href={`${p}#leistungen`}>Leistungen</a>
+      <a class="nav-link" href={`${p}#faq`}>FAQ</a>
+      <a class="nav-link" href={`${p}#ueber-mich`}>Über mich</a>
+      <a class="btn btn-sm" href={`${p}#kontakt`}>Termin vereinbaren</a>
+    </nav>
+  </div>
+</header>

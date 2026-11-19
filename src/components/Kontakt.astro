@@ -1,0 +1,54 @@
+<footer id="kontakt" class="contact">
+  <div class="wrap">
+    <div class="grid">
+      <div class="intro">
+        <p class="eyebrow">Kontakt</p>
+        <h2 class="h2">Ihr Hotel, <span class="soft">richtig gefunden.</span></h2>
+        <p>Schreiben Sie uns kurz, wo Ihr Hotel steht. Wir melden uns innerhalb von 24 Stunden und schlagen einen Termin vor.</p>
+        <p class="small">Gespräche auf Englisch, schriftlich auch auf Deutsch.</p>
+      </div>
+      <form class="form" name="anfrage" method="POST" action="/danke/" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="anfrage" />
+        <p class="hp" aria-hidden="true"><label>Nicht ausfüllen <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+        <label class="fld"><span>Name</span><input class="in" name="name" type="text" autocomplete="name" placeholder="Vor- und Nachname" required data-msg="Bitte geben Sie Ihren Namen ein." /><span class="err" hidden></span></label>
+        <label class="fld"><span>E-Mail</span><input class="in" name="email" type="email" autocomplete="email" placeholder="name@hotel.at" required data-msg="Bitte prüfen Sie die E-Mail-Adresse, z. B. name@hotel.at." /><span class="err" hidden></span></label>
+        <label class="fld"><span>Hotel</span><input class="in" name="hotel" type="text" autocomplete="organization" placeholder="Name des Hotels" required data-msg="Bitte geben Sie den Namen des Hotels ein." /><span class="err" hidden></span></label>
+        <label class="fld"><span>Website des Hotels (optional)</span><input class="in" name="website" type="text" inputmode="url" placeholder="www.ihr-hotel.at" /></label>
+        <label class="fld wide"><span>Nachricht (optional)</span><textarea class="in" name="nachricht" rows="4" placeholder="Was möchten Sie wissen?"></textarea></label>
+        <div class="foot">
+          <small>Ihre Angaben verwenden wir nur, um Ihre Anfrage zu beantworten. <a href="/datenschutz/">Datenschutz</a></small>
+          <button class="btn btn-light" type="submit">Anfrage senden</button>
+        </div>
+      </form>
+    </div>
+    <div class="foot-bar">
+      <span class="logo">Random Room</span>
+      <nav aria-label="Seite"><span class="lbl">Seite</span><a href="#leistungen">Leistungen</a><a href="#faq">FAQ</a><a href="#ueber-mich">Über mich</a></nav>
+      <nav aria-label="Rechtliches"><span class="lbl">Rechtliches</span><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></nav>
+    </div>
+    <div class="copy-row"><span>© 2026 Random Room · Klagenfurt am Wörthersee</span><span>DE</span></div>
+  </div>
+</footer>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[name="anfrage"]')!;
+  const fields = Array.from(form.querySelectorAll<HTMLInputElement>('input[required]'));
+  const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  function check(el: HTMLInputElement) {
+    const v = el.value.trim();
+    const bad = !v || (el.type === 'email' && !emailOk(v));
+    const err = el.parentElement!.querySelector<HTMLElement>('.err')!;
+    el.setAttribute('aria-invalid', String(bad));
+    err.textContent = bad ? el.dataset.msg || '' : '';
+    err.hidden = !bad;
+    return !bad;
+  }
+  fields.forEach((el) => {
+    el.addEventListener('blur', () => { if (el.value.trim() || el.getAttribute('aria-invalid')) check(el); });
+    el.addEventListener('input', () => { if (el.getAttribute('aria-invalid') === 'true') check(el); });
+  });
+  form.addEventListener('submit', (e) => {
+    const ok = fields.map(check).every(Boolean);
+    if (!ok) { e.preventDefault(); fields.find((f) => f.getAttribute('aria-invalid') === 'true')?.focus(); }
+  });
+</script>

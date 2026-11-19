@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import MiniFooter from '../components/MiniFooter.astro';
+import { owner, site } from '../config/site';
+const rows: [string, string][] = [
+  ['Medieninhaber und Diensteanbieter', `${owner.name}<br>${owner.street}<br>${owner.postalCode} ${owner.city}, ${owner.country}`],
+  ['Kontakt', `E-Mail: ${owner.email}<br>Telefon: ${owner.phone}`],
+  ['Unternehmensgegenstand', owner.gewerbe],
+  ['GISA-Zahl', owner.gisa],
+  ['Gewerbebehörde', owner.behoerde],
+  ['Kammer', owner.kammer],
+  ['Rechtsvorschriften', 'Gewerbeordnung (GewO), abrufbar unter <a href="https://www.ris.bka.gv.at" rel="noopener">www.ris.bka.gv.at</a>'],
+  ['UID-Nummer', owner.uid],
+  ['Grundlegende Richtung', `Information über die Leistungen von ${site.name} für Hotels.`],
+];
+---
+<Base title={`Impressum – ${site.name}`} description="Impressum und Offenlegung von Random Room.">
+  <div class="legal-top">
+    <Header home={false} />
+    <main id="main" class="legal">
+      <div class="wrap grid">
+        <div class="intro">
+          <p class="eyebrow">Rechtliches</p>
+          <h1 class="h1" style="font-size:clamp(44px,6vw,64px)">Impressum</h1>
+          <p>Informationen nach § 5 ECG, § 63 GewO und Offenlegung nach § 25 MedienG.</p>
+        </div>
+        <dl>
+          {rows.map(([k, v]) => (<><dt>{k}</dt><dd set:html={v} /></>))}
+        </dl>
+      </div>
+    </main>
+  </div>
+  <MiniFooter />
+</Base>
